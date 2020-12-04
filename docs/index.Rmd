@@ -50,8 +50,9 @@ Edit this template to fill in your own content.
 
 # Introduction
 
-Type a brief introduction here.
+#Type a brief introduction here.
 
+This reference guide was created for my Analysis of Environmental Data final, but I know I will use this for years to come as a to help retain the skills learned from this class. 
 
 # Functions 1: Data Structure Functions {.tabset .tabset-pills}
 
@@ -104,18 +105,21 @@ a data frame contains columns....
 
 How to subset a data frame: 
 
-If I know the name of the column I can use the $ symbol 
+- If I know the name of the column, I can use the $ symbol 
+
+`data.frame()`
 
 ```{r data_frame_example_1}
-  #Build a data fram from scratch:
+  #Build a data from scratch:
 dat_1 = data.frame(
-  letters = c("b", "w", "B"),
-  numbers_1 = c(34, 6, 123454))
+  letters = c("A", "y", "a"),
+  numbers_1 = c(13, 4, 123454))
 
 # I can print the contents by typing the name of the data frame
 dat_1
 
-#subset a column by name 
+#subset a column by name
+dat_1$letters
 ```
 
 
@@ -123,26 +127,109 @@ Type your data frame example here.
 
 ## `matrix()`
 
-Type your matrix example here.
+ #Type your matrix example here.
+
+A matrix is a group of elements of the same type, arranged by rows and columns. Matrices are always two-dimensional
+ 
+ -`byrow` tells the matrix to fill by row; if you set `byrow=FALSE` it will set matrix to fill by column.
+  
+  - This is also a good time to mention when writing `FALSE` or `TRUE` it can also be shortened to `F` or `T`
+  
+  
+ - The components to create a matrix will be: 
+    - (rows:columns, arrange by row or column, how many rows/ columns it should be)
+    
+```{r matrix_example}
+#Basic Matrix: 
+matrix(2:10, byrow= T, nrow = 3)
+# which is shorthand for: matrix(c(1,2,3,4,5,6,7,8,9))
+    
+```
 
 
 ## `length()`
 
+`length()` function can be used to get or set the length of a vector or factor. Lets recall the previous example for a vector: 
+```{r}
+# Create a vector of numbers:
+num_vec  = c(1, 4, 8, 9, 13)
+
+# Create a vector of characters:
+char_vec = c("a", "fish", "data is cool")
+```
+
+Now lets find the length of the two vectors above:
+```{r length_example}
+# you can see here that the length of the `num_vec` is 5
+length(num_vec)
+
+# The length of `char_vec` is 3
+length(char_vec)
+
+```
+
 
 ## `nrow()`
+
+`nrow` tells matrix how many rows to have. The `nrow` function can be used within a matrix that is distributed by its rows.
+
+```{r matrix_row_example1}
+
+  # Building a Matrix by row:
+  matrix(10:34, byrow = T, nrow = 5)
+    
+```
 
 
 ## `ncol()`
 
+ -`ncol` function tells the matrix how many columns to have when you set the `byrow = FALSE`. 
+
+  - This is also a good time to reiterate when writing `FALSE` or `TRUE` it can also be shortened to `F` or `T`
+```{r matrix_bycolumn_example}
+# Building a Matrix by column:
+  matrix(1:15, byrow = FALSE, ncol = 5)
+```
+
 
 ## `dim()`
+Just like `Length()`, `dim()` function finds the dimension of an object. 
 
+Lets recall the example of the matrix: 
+```{r matrix_row_example}
+
+  # Building a Matrix by row:
+  mat_row= matrix(10:34, byrow = T, nrow = 5)
+    
+ #Using the dim() function:
+dim(mat_row)
+#the output tells us that there are 5 rows, and 5 columns
+```
 
 # Functions 2: Numerical Data Exploration  {.tabset .tabset-pills}
 
 ## `summary()`
 
+`summary()` is a function that tells you the summary of the given object. 
+
+```{r}
+# Load penguins package: 
+require(palmerpenguins)
+
+#We want to look at the summary for the species column of the penguins data frame:
+summary(penguins$species)
+
+#This tells us the different species, and how many observations of each there are. 
+```
+
 ## `mean()`
+
+The `mean()` is a arithmetic function. We can use r to do basic computations. 
+
+```{r}
+scores= c(1,486,3968,743,4,2)
+mean(scores)
+```
 
 ## `sd()`
  
@@ -151,19 +238,67 @@ Type your matrix example here.
 # Functions 3: Graphical Data Exploration {.tabset .tabset-pills}
 
 See the final project description for a list of the required functions.
+
+##  `par()` and `mfrow=`
+```{r datacall}
+#Lets require data set: 
+require(palmerpenguins)
+penguin_dat = droplevels(subset(penguins, species != "Gentoo"))
+dat_adelie = subset(penguin_dat, species == "Adelie")
+dat_chinstrap = subset(penguin_dat, species == "Chinstrap")
+```
+
+```{r parand mfrow}
+par(mfrow = c(1, 2), oma=c(2,0,2,0))
+hist(dat_adelie$flipper_length_mm, xlab = "Adelie", main = "")
+hist(dat_chinstrap$flipper_length_mm, xlab = "Chinstrap", main= "")
+mtext("Historgram of Adelie and Chinstrap flipper lengths ", side = 3, outer = T, line = 0, cex = 2)
+mtext("Flipper Lengths (mm.)", side = 1, outer = T, line = 0, cex = 1.5)
+```
+
 ##  `plot()`
 I can use `plot()` to create scatterplots 
-
 ```{r scatterplot_1, fig.asp=0.75}
 # load the penguins package: 
 require(palmerpenguins)
 
 #using formula notation:
-# i can use the pch argument to change the cymbol
+# I can use the pch argument to change the symbol
+#`col=`  can be used to change the color of the symbol. 
+# `cex=` will change the size of the symbol, you can play around with this number to best fit the plot. 
 plot(bill_length_mm ~ body_mass_g,
      data = penguins,
-     pch= 16)
+     pch= 20, col= "dark green",
+     cex= .7)
+
+
+#Next lets look into the parameters for the plot itself
+plot(bill_length_mm ~ body_mass_g,
+     data = penguins,
+     pch= 20, col= "dark green",
+     cex= .7,
+     main = "Plot of Body Mass (g)\nand Bill Length (mm)",
+     ylab= "Bill Length (mm)",
+     xlab= "Body Mass (g)",
+     xlim= c(2900,6100),ylim=c(30,60))
 ```
+
+##  `boxplot()`
+
+
+##  `hist()`
+ #The breaks argument will suggest to R to create a certain number of bins 
+```{r hist_example}
+#First Load bird data: 
+dat_bird = read.csv("https://michaelfrancenelson.github.io/eco_602_634_2020/data/bird.sta.csv", TRUE)
+dat_habitat = read.csv("https://michaelfrancenelson.github.io/eco_602_634_2020/data/hab.sta.csv", TRUE)
+dat_all = merge(dat_bird, dat_habitat)
+
+#Lets now create a histogram with 4 bins for GCKI:
+hist(dat_all$GCKI, breaks = 4)
+```
+
+
 
 
 
@@ -171,15 +306,190 @@ plot(bill_length_mm ~ body_mass_g,
 
 See the final project description for a list of the required functions.
 
+##  `dnorm()`
+
+##  `pnorm()`
+ pnorm(1.2, 2, 2)
+##  `qnorm()`
+
+##  `dbinom()`
+dbinom(3, 4, 0.75)
+##  `pbinom()`
+pbinom(3,4, 0.75 )
+##  `qbinom()`
 
 
 # Functions 5: Other Functions {.tabset .tabset-pills}
 
 See the final project description for a list of the required functions.
+##  `subset()`
 
+##  `library()` and ##  `require()`
 
+##  `read.csv()`
 
 
 # Part 2: Data Anaylsis
 
-Your data analysis materials will go here.
+## Loading Data
+First we will load the data set: 
+```{r load_data}
+  #Load Delomys data:
+  delomys= read.csv("https://michaelfrancenelson.github.io/eco_602_634_2020/data/delomys.csv")
+```
+
+## Numerical Exploration
+`summary()`: 
+```{r results='hold'}
+#summary(): 
+  summary(delomys$body_length)
+  summary(delomys$body_mass)
+```
+`shapiro.test()`
+```{r results= 'hold'}
+#Lets perform a test of normality on the body mass and length columns: 
+shapiro.test(delomys$body_mass) 
+shapiro.test(delomys$body_length)
+```
+
+## Graphical Exploration {.tabset .tabset-pills}
+
+### Scatterplot
+```{r fig.width= 10}
+#Scatterplot of body mass and body length: 
+plot(body_length ~ body_mass, data = delomys)
+```
+
+### Historgram
+```{r results= 'hold'}
+#Histogram of body mass
+hist(delomys$body_mass)
+#Histogram of body Length
+hist(delomys$body_length)
+```
+
+### Boxplot
+```{r boxplot_1}
+#Conditional boxplot of body mass, conditioned on species:
+
+boxplot(body_mass ~ binomial, data= delomys)
+```
+
+### Boxplot2
+```{r boxplot_2}
+#Conditional boxplot of body mass, conditioned on sex
+boxplot(body_mass ~ sex, data = delomys)
+```
+
+### Boxplot3
+```{r boxplot_3}
+#Conditional boxplot of body mass, conditioned on both species and sex
+boxplot(body_mass ~ binomial * sex, data = delomys)
+```
+
+## There are questions here: Add them in !!! 
+
+## Model Building {.tabset .tabset-pills}
+We know that normality assumptions applies to the residual values after we fit a model. 
+
+Using code chunk, fit 5 models using lm()
+
+### Model 1
+
+```{r model1}
+# Simple linear regression 
+fit_1 = lm(body_length ~ body_mass, data = delomys)
+coef(fit_1)
+
+```
+
+### Model 2
+```{r model2}
+#1-way ANOVA 
+fit_2 = lm(body_mass ~ sex, data = delomys)
+summary(fit_2)
+anova(fit_2)
+```
+### Model 3
+```{r model3}
+#1- way ANOVA 
+fit_3 = lm(body_mass ~ binomial, data = delomys)
+summary(fit_3)
+anova(fit_3)
+```
+### Model 4
+```{r model4}
+#2-way additive ANOVA
+fit_4= lm(body_mass ~ sex + binomial, data = delomys)
+anova(fit_4)
+```
+### Model 5
+```{r model5}
+#2-way factorial ANOVA 
+fit_5 = lm(body_mass ~ sex * binomial, data = delomys)
+anova(fit_5)
+```
+
+## Model Diagnostics
+```{r}
+#Creating the Residuals
+resid_fit1 = residuals(fit_1)
+resid_fit2 = residuals(fit_2)
+resid_fit3 = residuals(fit_3)
+resid_fit4 = residuals(fit_4)
+resid_fit5 = residuals(fit_5)
+
+#Create histograms of the residuals
+hist(resid_fit1)
+hist(resid_fit2)
+hist(resid_fit3)
+hist(resid_fit4)
+hist(resid_fit5)
+```
+
+Using the `shapiro.test()` function on each model, you can test the null
+```{r}
+#Shapiro test on the five models
+shapiro.test(resid_fit1)
+shapiro.test(resid_fit2)
+shapiro.test(resid_fit3)
+shapiro.test(resid_fit4)
+shapiro.test(resid_fit5)
+```
+
+# Questions here
+
+# Model Intepretation
+## Printing out coefficient tables
+```{r}
+knitr::kable(coef(summary(fit_1)))
+knitr::kable(coef(summary(fit_2)))
+knitr::kable(coef(summary(fit_3)))
+knitr::kable(coef(summary(fit_4)))
+knitr::kable(coef(summary(fit_5)))
+```
+
+## Printing out ANOVA Tables
+```{r results}
+knitr::kable(anova(fit_1))
+knitr::kable(anova(fit_2))
+knitr::kable(anova(fit_3))
+knitr::kable(anova(fit_4))
+knitr::kable(anova(fit_5))
+
+```
+
+1.  yes because the p value is less than 0.05.
+2. There is not a significant interaction
+3. No they do not 
+# Model Comparison: Body Mass
+```{r}
+AIC(fit_1)
+AIC(fit_2)
+AIC(fit_3)
+AIC(fit_4)
+AIC(fit_5)
+```
+
+
+

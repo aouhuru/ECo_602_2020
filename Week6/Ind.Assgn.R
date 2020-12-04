@@ -28,7 +28,7 @@
   # b - 5.0
   #ss - 1, draw= 50
   
-# the skew continues to be right tailied. The max is the second and third counts. (this is not theoretical)
+# the skew continues to be right tailed. The max is the second and third counts. (this is not theoretical)
   
 #8
 # It tried to me a little more normally distributed with sample size of two

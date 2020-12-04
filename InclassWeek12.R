@@ -1,6 +1,6 @@
 install.packages("here")
 require(here)
-
+read.csv(here("data", "delomys.csv"))
 dat_delomys= read.csv("https://michaelfrancenelson.github.io/eco_602_634_2020/data/delomys.csv")
 head(dat_delomys)
 ncol(dat_delomys)
