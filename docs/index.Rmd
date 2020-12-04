@@ -384,7 +384,8 @@ boxplot(body_mass ~ sex, data = delomys)
 ### Boxplot3
 ```{r boxplot_3}
 #Conditional boxplot of body mass, conditioned on both species and sex
-boxplot(body_mass ~ binomial * sex, data = delomys)
+boxplot(body_mass ~ binomial * sex, data = delomys,
+        names = c("D.dorsalis - F", "D.sublineatus- F", "D.dorsalis - M", "D.sublineatus- M"))
 ```
 
 ## There are questions here: Add them in !!! 
