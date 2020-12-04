@@ -148,7 +148,7 @@ plot(
     st_dev = sd_obs
   )
   
-#Repeated Simulations
+#----Repeated Simulations - i ----
   n_sims = 1000
   p_vals = numeric(n_sims)
   for(i in 1:n_sims)
@@ -177,7 +177,7 @@ plot(
     return(lm(y_sim ~ x))
   }
   
-#simulating Effect Sizes
+#----simulating Effect Sizes - j & i ----
   alpha = 0.05
   n_sims = 10
   p_vals = numeric(n_sims)
@@ -215,7 +215,7 @@ plot(
   abline(v = coef(fit_1)[2], lty = 2, col = 'red')
   
   
-#Simulating Sample Sizes
+#----Simulating Sample Sizes - j & i----
   alpha = 0.05
   n_sims = 1000
   p_vals = numeric(n_sims)
@@ -253,7 +253,7 @@ plot(
 
 #Bivariate Power Analysis
   
-#Effect Size and Sample Size
+#----Effect Size and Sample Size- k, j, i----
   alpha = 0.01
   n_sims = 50
   
@@ -261,7 +261,7 @@ plot(
   
   n_effect_sizes = 20
   effect_sizes = seq(-.01, .01, length.out = n_effect_sizes)
-  sample_sizes = seq(10, 50)
+  sample_sizes = seq(10, 100)
   
   sim_output_2 = matrix(nrow = length(effect_sizes), ncol = length(sample_sizes))
   
@@ -293,15 +293,17 @@ plot(
       effect_size = effect_sizes,
       sample_size = sample_sizes
     )
-  
+
+  #----Image ----
   image(sim_n_effect_size$power)
   
-
+dev.off()
   # Contour Plotting 
   x = sim_n_effect_size$effect_size
   y = sim_n_effect_size$sample_size
   z = sim_n_effect_size$power
   contour(x,y,z)
+  contour(x,y,z, ylim = c(10, 100))
 
 #---- 3D Plotting ----
 
@@ -317,8 +319,10 @@ persp(
 
 #Interactive Plot
 install.packages("rgl")
+require(rgl)
 
 
+install.packages("https://dl.bintray.com/xquartz/downloads/XQuartz-2.7.11.dmg")
 persp3d(x = sim_n_effect_size$effect_size,
         y = sim_n_effect_size$sample_size,
         z = sim_n_effect_size$power,
