@@ -237,7 +237,7 @@ dat_chinstrap = subset(penguin_dat, species == "Chinstrap")
 par(mfrow = c(1, 2), oma=c(2,0,2,0))
 hist(dat_adelie$flipper_length_mm, xlab = "Adelie", main = "")
 hist(dat_chinstrap$flipper_length_mm, xlab = "Chinstrap", main= "")
-mtext("Historgram of Adelie and Chinstrap flipper lengths ", side = 3, outer = T, line = 0, cex = 2)
+mtext("Adelie and Chinstrap flipper lengths", side = 3, outer = T, line = 0, cex = 1.5)
 mtext("Flipper Lengths (mm.)", side = 1, outer = T, line = 0, cex = 1.5)
 ```
 
