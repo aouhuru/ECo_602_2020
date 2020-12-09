@@ -213,12 +213,80 @@ boxplot(bill_dat ~ species, data = penguins, xlab = "species", ylab = "Bill Dept
 
 #group means and differences between the means
 diff_crit = aggregate(
-  penguins$bill_depth_mm ~ dat_pen$species, 
+  bill_depth_mm ~ species, 
   data = dat_pen, FUN = mean, na.rm = TRUE
 )
-diff_observed = diff(diff_crit[,2])
+diff_crit = diff(diff_crit[,2])
 name_unknown
-diff_observed
+diff_crit
 ##Question 7 ### Resampling
 
 ## Question 8### Resampling
+
+
+x = dat_pen$bill_length_mm
+n_1 = 68
+n_2 = 152
+
+two_group_resample = function(x, n_1, n_2) 
+{
+  x = dat_pen$bill_length_mm
+  n_1 = 68
+  n_2 = 152
+  
+  dat_1 = sample(x, n_1, replace = TRUE)
+  dat_2 = sample(x, n_2, replace = TRUE)
+  
+  diff_simulated = 
+    mean(dat_1, na.rm = TRUE) - mean(dat_2, na.rm = TRUE)
+  diff_simulated
+}
+set.seed(54321)
+two_group_resample(dat_pen$bill_length_mm, 68, 152)
+dev.off()
+
+boxplot( bill_length_mm ~ species, data= dat_pen)
+
+#aggregate
+diff_crit1 = aggregate(
+  bill_length_mm ~ species, 
+  data = dat_pen, 
+  FUN = mean, 
+  na.rm = TRUE)
+diffcrit = diff(diff_crit1[, 2])
+
+agg_means
+diffcrit
+
+#t-test: 
+testing = t.test(bill_length_mm ~ species, data = dat_pen)
+testing
+
+#Resampling experiment
+n = 1000
+mean_differences = c()
+for (i in 1:n)
+{
+  mean_differences = c(
+    mean_differences,
+    two_group_resample(dat_pen$bill_length_mm, 68, 152)
+  )
+}
+hist(mean_differences)
+
+sum(abs(mean_differences) >= diffcrit)
+
+#Retrieving named Elements
+t_test = t.test(flipper_shuffled ~ dat_pen$species)
+
+#examine object
+str(t_test)
+
+#Estimate object
+t_test$estimate
+
+
+diff2= round(diff(t_test$estimate), digits = 3)
+print(diff2, digits = 3)
+
+print(c(observed = diffcrit, simulated = mean_differences))

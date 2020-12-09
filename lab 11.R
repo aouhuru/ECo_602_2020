@@ -181,7 +181,6 @@ plot(
   alpha = 0.05
   n_sims = 10
   p_vals = numeric(n_sims)
-  
   n_effect_sizes = 20
   effect_sizes_1 = seq(-.01, .01, length.out = n_effect_sizes)
   
@@ -189,12 +188,13 @@ plot(
   
   for(j in 1:n_effect_sizes)
   {
+    effect_size_j = effect_sizes_1[j]
     for(i in 1:n_sims)
     {
       fit_sim = linear_sim_fit(
         x = birdhab$ls,
         y_int = int_obs,
-        slope = effect_sizes_1[j],
+        slope = effect_size_j,
         st_dev = sd_obs
       )
       
@@ -331,9 +331,23 @@ persp3d(x = sim_n_effect_size$effect_size,
         theta = 30, phi = 30, expand = .75,
         ticktype = 'detailed')
 
+#----Saving Interactive Plots ----# 
+rgl::writeWebGL(
+  dir = here::here("docs", "webGL"), 
+  filename = here::here(
+    "docs", "webGL",
+    "n_effect_size_power_sim_plot.html"),
+  width = 1200, height = 1200
+)
 
+save(
+  sim_n_effect_size,
+  file = here::here("data", "lab_11_n_effect_sizes.Rdata"))
+
+load(file = here::here("data", "lab_11_n_effect_sizes.Rdata"))
 #----Assignment----
 #Population Dispersion Analysis
+
 alpha = 0.05
 n_sims = 100
 p_vals = numeric(n_sims)
@@ -345,22 +359,28 @@ sd_obs= fit_1_summary$sigma
 n_sds = 20
 pop_sds = seq(from = 0.01, to = 1.5, length.out = n_sds)
 
-pop_sd_power = numeric(n_sds)
+pop_sd_power = numeric(length(pop_sds))
 
 for(j in 1:length(pop_sds))
 {
-  pop_sd_j = ...
+  pop_sd_j = pop_sds[j]
   for(i in 1:n_sims)
   {
-    fit_sim = linear_sim_fit(...)
-    p_vals[i] = ...
+    fit_sim = linear_sim_fit(
+        x = birdhab$ls,
+        y_int = int_obs,
+        slope = slope_obs,
+        st_dev = pop_sd_j
+      )
+      
+      p_vals[i] = summary(fit_sim)$coefficients[2, 'Pr(>|t|)']
   }
-  pop_sd_power[j] = ...
+  pop_sd_power[j] = sum(p_vals < alpha) / n_sims
 }
 
 sim_output_dispersion = data.frame(
-  sd = ...,
-  power = ...)
+  sd = c(pop_sds),
+  power = c(pop_sd_power))
 
 # You should save your simulation results so you don't have to run it every time.
 save(
@@ -368,7 +388,63 @@ save(
   file = here::here("data", "lab_ll_dat_dispersion_sim.RData"))
 
 # Line plot of standard deviation (x-axis) and statistical power (y-axis)
-plot(...)
+plot(power ~ sd, data = sim_output_dispersion)
+dev.off()
 
 # Add a dotted vertical red line at the observed population standard deviation value.
 abline(v = ...)
+
+
+#---- Population Dispersion & Sample Size Analysis----
+alpha = 0.05
+
+# Start with a small number
+n_sims = 10
+p_vals = numeric(n_sims)
+
+# What was the observed standard deviation?
+sd_obs= fit_1_summary$sigma
+
+# specify the number of different standard deviation values to simulate:
+# Start with a small number
+n_sds = 20
+pop_sds = seq(from = 0.05, to = , length.out = n_sds)
+
+pop_sd_power = numeric(...)
+
+sample_sizes = seq(5, 100)
+
+sim_output_3 = matrix(...)
+
+for(k in 1:length(pop_sds))
+{
+  pop_sd_k = pop_sds[k]
+  
+  for(j in 1:length(sample_sizes))
+  {
+    x_vals = seq(0, 100, length.out = sample_sizes[j])
+    
+    for(i in 1:n_sims)
+    {
+      fit_sim = ...
+      p_vals[i] = ...
+    }
+    
+    sim_output_3[k, j] = ...
+  }
+  print(paste0("Testing standard deviation ", k, " of ", n_sds))
+}
+
+image(sim_output_3)
+
+sim_3_dat = 
+  list(
+    power       = sim_output_3,
+    sample_size = sample_sizes,
+    pop_sd      = pop_sds)
+
+
+# You should save your simulation results so you don't have to run it every time.
+save(
+  sim_3_dat, 
+  file = here::here("data", "lab_ll_sim_output_dispersion_n_1000.RData"))

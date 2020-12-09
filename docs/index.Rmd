@@ -18,9 +18,6 @@ knitr::opts_chunk$set(message = FALSE)
 options(knitr.duplicate.label = TRUE)
 ```
 
-Everything above this line is the header.
-
-
 <!-- The following text won't be displayed in your document.  It tells R how to make nicer looking buttons for your tabbed content. -->
 
 <style type="text/css" rel="stylesheet">
@@ -38,36 +35,23 @@ Everything above this line is the header.
 }
 </style>
 
-
-Use this document as a template to build your final project.
-
-If you've already created the file index.Rmd in your docs folder, you can paste everything below the header into that document.
-
-If you don't yet have an index.Rmd file, save this document as index.Rmd in the docs folder of your main class folder.
-
-Edit this template to fill in your own content.
-
-
 # Introduction
 
-#Type a brief introduction here.
-
-This reference guide was created for my Analysis of Environmental Data final, but I know I will use this for years to come as a to help retain the skills learned from this class. 
+This reference guide was created for my Analysis of Environmental Data final, but I know I will use this for years to come as a to help retain the skills learned from this class, The first couple sections dive into the functions used this semester. The second part uses the information from the Delomys data set. 
 
 # Functions 1: Data Structure Functions {.tabset .tabset-pills}
 
-Look at the source code for the final project template, you'll notice the text:
+Look at the source code for the final project template, you'll notice the text: 
 
-{.tabset .tabset-pills}
+`{.tabset .tabset-pills}`
 
 This creates tabbed content for all the following sections that are one-level below.
 
 - If you include them on a primary header (one #), all of the subsequent secondary headers will in tabs.
+  - This is really good when trying to make an oraganized page with code. 
 
 
-
-
-## `c()`
+## `c()` 
 
 The following is the markdown text needed to reproduce my code example for `c()`:
 
@@ -79,7 +63,7 @@ The function `c()` *combines* or *concatenates* its arguments into a vector (a 1
 
 Here's two examples using numeric and character data types:
 
-```{r}
+```{r class.source="bg-success"}
 # Create a vector of numbers:
 num_vec  = c(1, 4, 8, 9, 13)
 
@@ -89,7 +73,7 @@ char_vec = c("a", "fish", "data is cool")
 
 I can show the contents of a vector by typing the name of the vector, or using the `print()` function.
 
-```{r}
+```{r class.source="bg-success"}
 # Typing the name of the vector into the console prints the contents
 num_vec
 
@@ -109,7 +93,7 @@ How to subset a data frame:
 
 `data.frame()`
 
-```{r data_frame_example_1}
+```{r data_frame_example_1, class.output="bg-info"}
   #Build a data from scratch:
 dat_1 = data.frame(
   letters = c("A", "y", "a"),
@@ -122,12 +106,7 @@ dat_1
 dat_1$letters
 ```
 
-
-Type your data frame example here.
-
 ## `matrix()`
-
- #Type your matrix example here.
 
 A matrix is a group of elements of the same type, arranged by rows and columns. Matrices are always two-dimensional
  
@@ -139,13 +118,12 @@ A matrix is a group of elements of the same type, arranged by rows and columns. 
  - The components to create a matrix will be: 
     - (rows:columns, arrange by row or column, how many rows/ columns it should be)
     
-```{r matrix_example}
-#Basic Matrix: 
-matrix(2:10, byrow= T, nrow = 3)
-# which is shorthand for: matrix(c(1,2,3,4,5,6,7,8,9))
+```{r matrix_example, class.source="bg-warning"}
+#Basic Matrix (shorthand):
+matrix(2:10, byrow = T, nrow = 3)
+matrix(c(1,2,3,4,5,6,7,8,9), byrow = T, nrow = 3) # Longhand
     
 ```
-
 
 ## `length()`
 
@@ -159,7 +137,7 @@ char_vec = c("a", "fish", "data is cool")
 ```
 
 Now lets find the length of the two vectors above:
-```{r length_example}
+```{r length_example, class.output="bg-danger"}
 # you can see here that the length of the `num_vec` is 5
 length(num_vec)
 
@@ -168,35 +146,32 @@ length(char_vec)
 
 ```
 
-
 ## `nrow()`
 
 `nrow` tells matrix how many rows to have. The `nrow` function can be used within a matrix that is distributed by its rows.
 
-```{r matrix_row_example1}
+```{r matrix_row_example1, class.output="bg-primary"}
 
   # Building a Matrix by row:
   matrix(10:34, byrow = T, nrow = 5)
     
 ```
 
-
 ## `ncol()`
 
  -`ncol` function tells the matrix how many columns to have when you set the `byrow = FALSE`. 
 
   - This is also a good time to reiterate when writing `FALSE` or `TRUE` it can also be shortened to `F` or `T`
-```{r matrix_bycolumn_example}
+```{r matrix_bycolumn_example, class.output="bg-success"}
 # Building a Matrix by column:
   matrix(1:15, byrow = FALSE, ncol = 5)
 ```
-
 
 ## `dim()`
 Just like `Length()`, `dim()` function finds the dimension of an object. 
 
 Lets recall the example of the matrix: 
-```{r matrix_row_example}
+```{r matrix_row_example, class.source="bg-info"}
 
   # Building a Matrix by row:
   mat_row= matrix(10:34, byrow = T, nrow = 5)
@@ -212,7 +187,7 @@ dim(mat_row)
 
 `summary()` is a function that tells you the summary of the given object. 
 
-```{r}
+```{r class.output="bg-success"}
 # Load penguins package: 
 require(palmerpenguins)
 
@@ -226,20 +201,30 @@ summary(penguins$species)
 
 The `mean()` is a arithmetic function. We can use r to do basic computations. 
 
-```{r}
+```{r class.output="bg-success"}
 scores= c(1,486,3968,743,4,2)
 mean(scores)
 ```
 
 ## `sd()`
- 
-
+The `sd()` function outputs the standard deviation. This function uses the argument `na.rm` which will allow you to keep or remove missing values. 
+`sd()`
+```{r class.output="bg-success"}
+sd(penguins$bill_length_mm, na.rm = TRUE)
+# When na.rm is TRUE: It removes missing values
+sd(penguins$bill_length_mm, na.rm = FALSE)
+#when na.rm is FALSE: it does not remove missing values, which does not print out a numeric number
+```
 
 # Functions 3: Graphical Data Exploration {.tabset .tabset-pills}
 
-See the final project description for a list of the required functions.
+##  `subset()` 
+For this function, we want to pull out the species subset of the full data set `palmerpenguins`. 
 
-##  `par()` and `mfrow=`
+- The use of the double = or `==` is a binary operation  that tests for equality. in this example it pulls out one specific species in the subset species. 
+
+- The binary operation `!=`  means it is not equal to.
+
 ```{r datacall}
 #Lets require data set: 
 require(palmerpenguins)
@@ -247,7 +232,7 @@ penguin_dat = droplevels(subset(penguins, species != "Gentoo"))
 dat_adelie = subset(penguin_dat, species == "Adelie")
 dat_chinstrap = subset(penguin_dat, species == "Chinstrap")
 ```
-
+##  `par()` and `mfrow=`
 ```{r parand mfrow}
 par(mfrow = c(1, 2), oma=c(2,0,2,0))
 hist(dat_adelie$flipper_length_mm, xlab = "Adelie", main = "")
@@ -284,7 +269,16 @@ plot(bill_length_mm ~ body_mass_g,
 ```
 
 ##  `boxplot()`
-
+A boxplot is the same as a box and whisker plot. It shows a visual summary of the  minimum, Q1, median, Q2, and the maximum points of a data range. The Q1, median, and Q3  represents the IQR that shows the range of 50% of the information from 25-75th percentile. 
+dev.off()
+```{r}
+#This is just a boxplot between the bill length and the species 
+boxplot(bill_length_mm ~ species,
+     data = penguin_dat)
+#This boxplot of bill length that is conditioned by both species and the sex
+boxplot(bill_length_mm ~ species * sex,
+     data = penguin_dat)
+```
 
 ##  `hist()`
  #The breaks argument will suggest to R to create a certain number of bins 
@@ -299,40 +293,108 @@ hist(dat_all$GCKI, breaks = 4)
 ```
 
 
-
-
-
 # Functions 4: Distribution Functions {.tabset .tabset-pills}
 
-See the final project description for a list of the required functions.
+Distribution functions are very useful for both discrete and continuous distributions. `dnorm()`, `pnorm()`, and `qnorm()`  are all functions used for continuous normal distribution. `dbinom()`, `pbinom()`, and `qbinom()` are functions for binomal discrete distribution.
 
 ##  `dnorm()`
+The d - in `dnorm()` stands for density. The function will tell the probability density of the set. The arguments are x (or independent variable), mean, and sd (or standard deviation).
+
+`dnorm(x, mean, sd)` For this we want to show what the function looks like when you want to find the probability of observing a value of less than 5 from a normally-distributed population with mean = 5 and standard deviation = 2.
+
+`dnorm()`
+```{r}
+dnorm(5, mean = 5, sd = 2)
+```
 
 ##  `pnorm()`
- pnorm(1.2, 2, 2)
+The p - in `pnorm()` stands for probability. This function will show the cumulative density. 
+
+`pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)`
+
+If you want to know the probability of observing a value less than 8 in a normal distribution with a mean of 10 and standard deviation of 3, you could write your code like this:
+
+`pnorm()`
+```{r}
+pnorm(8, mean = 12, sd = 4)
+```
+
 ##  `qnorm()`
+The q - in `qnorm()` stands for quanitle. This will tell what the quantile is of the set of numbers. The function computes the inverse of the `pnorm` function. 
+
+`qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)`
+
+`qnorm()`
+```{r}
+qnorm(.8, mean = 12, sd = 4)
+```
 
 ##  `dbinom()`
-dbinom(3, 4, 0.75)
+
+The `dbinom()` function tells the probability mass function. This function can help find the probability when a values is exaclty x. 
+
+```{r}
+dbinom(12, 15, 0.2)
+dbinom(12, 15, 0.8)
+```
+
 ##  `pbinom()`
-pbinom(3,4, 0.75 )
+
+The `pbinom()` function tells the cumulative mass. This function can help find the probability when an observed value is less or more than x. 
+```{r}
+pbinom(10, 20, 0.2)
+pbinom(10, 20, 0.4)
+```
+
 ##  `qbinom()`
 
+The `qbinom() is the quantile function. The function can help when you arw looking for the median or a particular percentile. 
+```{r}
+qbinom(.40, 200, .95)
+qbinom(.40, 200, .5)
+```
 
 # Functions 5: Other Functions {.tabset .tabset-pills}
 
-See the final project description for a list of the required functions.
-##  `subset()`
+##  `subset()` 
+For this function, we want to pull out the species subset of the full data set `palmerpenguins`. 
+  -The use of the double = or `==` is a binary operation  that tests for equality. in this example it pulls out one specific species in the subset species. 
 
-##  `library()` and ##  `require()`
+  - The binary operation `!=`  means it is not equal to.
+```{r subset}
+#Lets require data set: 
+require(palmerpenguins)
+penguin_dat = droplevels(subset(penguins, species != "Gentoo"))
+dat_adelie = subset(penguin_dat, species == "Adelie")
+dat_chinstrap = subset(penguin_dat, species == "Chinstrap")
+```
+
+##  `library()` and `require()`
+`library()` is a function that prints out all of the available saved packages in R. This is useful because it gives the name and its purpose all in one document. When you run the function without information inside of it, it will open up a new page with these different packages. 
+
+`require` is used to pull in one of these pre-loaded packages. When you use one of the packages listed in the library it will pull in the information without you having to physically install and tun the package. 
+```{r}
+library()
+require(palmerpenguins)
+summary(penguins)
+```
 
 ##  `read.csv()`
 
+The `read.csv()` function is used to read a file obtained from an outside source. you could set this function to a variable to create a data frame. It requires quotation marks because it is a string. 
+```{r}
+# read.csv("https://michaelfrancenelson.github.io/eco_602_634_2020/data/bird.sta.csv")
+
+# You can then set this function to a variable to create a data.frame 
+
+Bird_sta_data = read.csv("https://michaelfrancenelson.github.io/eco_602_634_2020/data/bird.sta.csv")
+```
+  
 
 # Part 2: Data Anaylsis
 
 ## Loading Data
-First we will load the data set: 
+First we will load the data set using the `read.csv()` function:
 ```{r load_data}
   #Load Delomys data:
   delomys= read.csv("https://michaelfrancenelson.github.io/eco_602_634_2020/data/delomys.csv")
@@ -348,7 +410,7 @@ First we will load the data set:
 `shapiro.test()`
 ```{r results= 'hold'}
 #Lets perform a test of normality on the body mass and length columns: 
-shapiro.test(delomys$body_mass) 
+shapiro.test(delomys$body_mass)
 shapiro.test(delomys$body_length)
 ```
 
@@ -357,81 +419,127 @@ shapiro.test(delomys$body_length)
 ### Scatterplot
 ```{r fig.width= 10}
 #Scatterplot of body mass and body length: 
-plot(body_length ~ body_mass, data = delomys)
+plot(body_length ~ body_mass, data = delomys,
+     main = "Body length and mass of the genus Delomys",
+     xlab= "Body mass", ylab = "Body length")
 ```
+
 
 ### Historgram
 ```{r results= 'hold'}
-#Histogram of body mass
-hist(delomys$body_mass)
-#Histogram of body Length
-hist(delomys$body_length)
+
+par(mfrow = c(1, 2), oma=c(1.5,0,1.5,0))
+# Histogram of body mass
+hist(delomys$body_mass,
+     main = "", xlab = "Body Mass") 
+# Histogram of body Length
+hist(delomys$body_length, 
+    main= "", ylab = "", xlab = "Body Length") #Histogram of body Length
+mtext("Historgrams of body mass and length of Genus Delomys ", side = 3, outer = T, line = 0, cex = 1.5)
+mtext("Delomys (genus) ", side = 1, outer = T, line = 0, cex = 1.5)
+
 ```
 
-### Boxplot
+### Boxplots
+
+#### Boxplots of body mass by sex and by species 
 ```{r boxplot_1}
-#Conditional boxplot of body mass, conditioned on species:
+par(mfrow= c(1,2), oma=c(0,0,1.5,0)) # This line sets the margins in order to add text.
 
-boxplot(body_mass ~ binomial, data= delomys)
+# Conditional boxplot of body mass, conditioned on species:
+boxplot(body_mass ~ binomial, data= delomys, xlab = "species", 
+        ylab = "Body mass", 
+        names = c("D.dorsalis", "D.sublineatus"))
+
+# Conditional boxplot of body mass, conditioned on sex:
+boxplot(body_mass ~ sex, data = delomys, ylab = "")
+mtext("Boxplot of Delomy body mass by length and by species ", 
+      side = 3, outer = T, line = 0, cex = 1.5)
+        
 ```
 
-### Boxplot2
-```{r boxplot_2}
-#Conditional boxplot of body mass, conditioned on sex
-boxplot(body_mass ~ sex, data = delomys)
-```
-
-### Boxplot3
+#### Boxplot of body mass conditioned on both species and sex
 ```{r boxplot_3}
-#Conditional boxplot of body mass, conditioned on both species and sex
+# Conditional boxplot of body mass, conditioned on both species and sex
 boxplot(body_mass ~ binomial * sex, data = delomys,
-        names = c("D.dorsalis - F", "D.sublineatus- F", "D.dorsalis - M", "D.sublineatus- M"))
+        names = c("D.dorsalis - F", "D.sublineatus- F", "D.dorsalis - M", "D.sublineatus- M"),
+        main= "Boxplot of Delomys body mass conditioned on both species and sex", 
+        xlab= "species - sex", ylab = "Body mass")
 ```
 
-## There are questions here: Add them in !!! 
+## Exploration Questions
+
+Answer the following in your report:
+
+1. Qualitatively describe the relationship between body mass and length. Does the relationship seem linear, curved, nonexistent?
+  
+    - The relationship between body mass and length seem to generaly clustered showing a good amount of overlap, but overal it seems to be linear. Looking at the scatterplot generally the longer the delomy is the more they weigh. 
+    
+2. Qualitatively describe the shapes of the histograms. Do the data appear normally-distributed? Explain why or why not.
+  
+    - `body_mass`: 
+        - This historgram seems to be normally distrubuted which shows a normal bell curve. It does seem to be slightly skewed to the right. There is a clear minimum, median, and max. As the body mass increases, there are less occurances. 
+        
+    - `body_length`: 
+        - Most of the body lengths are found in a cluster between 110 and 150 (I will not asusme labels, as none are listed). There is not a normal distribution od body lengths. It seems that this species grows to a common length with not much variation. 
+        
+3. Using both the histograms and normality tests, do you think the (unconditioned) body masses and body length are normally-distributed. Contrast your visual assessment of normality to the results of the numerical normality tests.
+
+    - The histograms suggest that they are visualy normally distributed. But looking at the `shapiro.test` normality test, it tells us numerically that the data is not normally distributed, which means we would reject the null because the p values are `=4.33e-05` and `< 2.2e-16`
+    
+4. Examine the conditional boxplots. Describe any graphical evidence you see for body mass differences based on species and/or sex.
+
+    - `species` or `binomial`:
+        - There does not seem to be that much of a difference in species. The D. dorsalis is visually grater than the D. sublineatus species. The 50% of the data is similiarly 
+    - `sex`: 
+      - males tend to be slightly biggeer than females, but not by much. the majority of the data for both female and male seem to be in the same range, so there is not much difference between a female and male visually.
+      
+    - The D. dorsalis female is slightly bigger than the D. sublineatus male, which proves true seeing that the dorsalis is bigger than the sublineautus. 
+    
 
 ## Model Building {.tabset .tabset-pills}
 We know that normality assumptions applies to the residual values after we fit a model. 
 
-Using code chunk, fit 5 models using lm()
+For this section we will fit 5 models using the `lm()` function.
 
-### Model 1
+### Model 1 - Simple 
 
 ```{r model1}
 # Simple linear regression 
 fit_1 = lm(body_length ~ body_mass, data = delomys)
 coef(fit_1)
-
 ```
 
-### Model 2
+### Model 2 - Body Mass ~ Sex
 ```{r model2}
 #1-way ANOVA 
 fit_2 = lm(body_mass ~ sex, data = delomys)
 summary(fit_2)
 anova(fit_2)
 ```
-### Model 3
+### Model 3 - Body Mass ~ Species
 ```{r model3}
 #1- way ANOVA 
 fit_3 = lm(body_mass ~ binomial, data = delomys)
 summary(fit_3)
 anova(fit_3)
 ```
-### Model 4
-```{r model4}
+### Model 4 - Body Mass Additive ANOVA
+```{r model4} 
 #2-way additive ANOVA
 fit_4= lm(body_mass ~ sex + binomial, data = delomys)
 anova(fit_4)
 ```
-### Model 5
+### Model 5 - Body Mass Factorial ANOVA
 ```{r model5}
 #2-way factorial ANOVA 
 fit_5 = lm(body_mass ~ sex * binomial, data = delomys)
 anova(fit_5)
 ```
 
-## Model Diagnostics
+## Model Diagnostics {.tabset .tabset-pills}
+
+For this section I will be creating residuals for each model using the `residuals()` function, then displaying them as histograms ( `hist()`), and testing for normality using the `shapiro.test()` function.
 ```{r}
 #Creating the Residuals
 resid_fit1 = residuals(fit_1)
@@ -440,49 +548,124 @@ resid_fit3 = residuals(fit_3)
 resid_fit4 = residuals(fit_4)
 resid_fit5 = residuals(fit_5)
 
-#Create histograms of the residuals
-hist(resid_fit1)
-hist(resid_fit2)
-hist(resid_fit3)
-hist(resid_fit4)
-hist(resid_fit5)
 ```
 
-Using the `shapiro.test()` function on each model, you can test the null
-```{r}
-#Shapiro test on the five models
+### Model 1
+```{r fig.height= 4}
+hist(resid_fit1, main = "Residual fit of Model 1", 
+     xlab = "residual fit (Model 1)")
 shapiro.test(resid_fit1)
+```
+
+### Model 2
+```{r fig.height= 4}
+hist(resid_fit2, main = "Residual fit of Model 2", 
+     xlab = "residual fit (Model 2)")
 shapiro.test(resid_fit2)
+```
+
+### Model 3
+```{r fig.height= 4}
+hist(resid_fit3, main = "Residual fit of Model 3", 
+     xlab = "residual fit (Model 3)")
 shapiro.test(resid_fit3)
+```
+
+### Model 4
+```{r fig.height= 4}
+hist(resid_fit4, main = "Residual fit of Model 4", 
+     xlab = "residual fit (Model 4)")
 shapiro.test(resid_fit4)
+```
+
+### Model 5 
+```{r fig.height= 4}
+hist(resid_fit5, main = "Residual fit of Model 5", 
+     xlab = "residual fit (Model 5)")
 shapiro.test(resid_fit5)
 ```
 
-# Questions here
+## Model Diagnostics Questions
+
+    1. What do you conclude about residual normality based on the numerical and graphical diagnostics?
+
+      - For Model 1, both the graphical and numerical diagnostics for normality state that there is not a normally distributed set of data.
+   
+      - For Models 2-5, the graphical diagnostics say that they are all normally distributed, but when looking deeper into the numeric diagnostics the `shapiro.test` shows that they are not normally distributed.
+  
+    2. Are violations of the normality assumption equally severe for all the models?
+      -  All of models seem to equally similar, expect for model 1 residuals. 
 
 # Model Intepretation
-## Printing out coefficient tables
-```{r}
+
+## Body Length 
+Coefficient Table
+```{r)}
 knitr::kable(coef(summary(fit_1)))
+```
+
+### Questions
+  
+    1. What is the magnitude of the mass/length relationship?
+
+      - The slope is the magnitude of the mass/length relationship which is 0.875
+  
+    2. What is the expected body length of an an animal that weighs 100g?
+  
+      - 163.675
+    
+    3. What is the expected body length of an animal that weighs 0g?
+  
+      - The body length of an animal that weight 0g would be the intercept or the base case. The value would be 76.125
+    
+
+## Body Mass
+Coefficient Table
+```{r}
 knitr::kable(coef(summary(fit_2)))
 knitr::kable(coef(summary(fit_3)))
 knitr::kable(coef(summary(fit_4)))
 knitr::kable(coef(summary(fit_5)))
 ```
+  
+### Questions
 
-## Printing out ANOVA Tables
+    1. What is the base level for sex?
+      -  Female is the intercept
+  
+    2. What is the base level for binomial?
+     -  D.dorsalis
+  
+    3. Which sex is heavier?
+      - The D.dorsalis sex is the heaviest. (48.86575)
+      - The male sex is heavier  (45.495598)
+  
+    4.Which species is heavier?
+     -  The D.dorsalis is heavier (46.752427)
+ 
+
+## Body Mass: ANOVA
+Printing out ANOVA Tables
 ```{r results}
 knitr::kable(anova(fit_1))
 knitr::kable(anova(fit_2))
 knitr::kable(anova(fit_3))
 knitr::kable(anova(fit_4))
 knitr::kable(anova(fit_5))
-
 ```
 
-1.  yes because the p value is less than 0.05.
-2. There is not a significant interaction
-3. No they do not 
+### Questions
+
+    1. Are sex and species significant predictors for body mass?
+      - yes because the p value is less than 0.05.
+  
+    2. Is there a significant interaction?
+      - There is not a significant interaction
+  
+    3. Does the significance (as measured by p-value) of either of the main effects (sex and species) differ much between the single-predictor models, the additive model, and the interactive model?
+      - No they do not 
+
+
 # Model Comparison: Body Mass
 ```{r}
 AIC(fit_1)
@@ -492,5 +675,13 @@ AIC(fit_4)
 AIC(fit_5)
 ```
 
+## Questions: 
+
+    1. Which two models have the lowest AIC?
+      - Model 4 the 2 way additive model,   [ `12896.73`] and Model 5 the 2 way factorial model [`12898.72`]
+    
+    2. Which of the two models with lowest AIC scores would you select? Explain your decision based on model fit and the complexity/understanding tradeoff.
+      -  I would choose the 2-way additive model because it has the lowest AIC, and because Model 5's p-value is larger than the alpha which states there is no significant interation. 
+  
 
 

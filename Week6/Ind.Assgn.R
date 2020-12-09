@@ -31,8 +31,8 @@
 # the skew continues to be right tailed. The max is the second and third counts. (this is not theoretical)
   
 #8
-# It tried to me a little more normally distributed with sample size of two
+# It tried to be a little more normally distributed with sample size of two
   
 
 #9
-  #Because rthe sample size is larger, the shape of the distribution is more narrow, resulting in more precised curve. 
+  #Because the sample size is larger, the shape of the distribution is more narrow, resulting in more precised curve. 
